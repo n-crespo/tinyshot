@@ -1,4 +1,4 @@
-# ss 📸
+# (s)creen (s)hot 📸
 
 A lightweight Windows region-snipping utility built with Python and PyQt6. Designed to launch instantly and stay out of your way.
 
