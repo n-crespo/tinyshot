@@ -9,7 +9,7 @@ build:
       --exclude-module PyQt6.QtSql \
       --exclude-module PyQt6.QtNetwork \
       --exclude-module PyQt6.QtPdf \
-      src/ss.py
+      src/tinyshot.py
 
 # Clean build artifacts
 clean:

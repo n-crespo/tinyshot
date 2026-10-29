@@ -31,11 +31,11 @@ jobs:
         run: just build
 
       - name: Compress Build Directory
-        run: Compress-Archive -Path dist/ss/* -DestinationPath dist/ss.zip
+        run: Compress-Archive -Path dist/tinyshot/* -DestinationPath dist/tinyshot.zip
 
       - name: Release Executable
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/ss.zip
+          files: dist/tinyshot.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

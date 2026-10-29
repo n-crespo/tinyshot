@@ -1,4 +1,4 @@
-# (s)creen (s)hot 📸
+# tinyshot 📸
 
 A lightweight Windows region-snipping utility built with Python and PyQt6. Designed to launch instantly and stay out of your way.
 
@@ -12,33 +12,33 @@ A lightweight Windows region-snipping utility built with Python and PyQt6. Desig
 
 ## Installation
 
-1. Go to the **[Releases](https://github.com/n-crespo/ss/releases)** page.
-2. Download the latest `ss.zip`.
-3. Extract `ss.zip` to your preferred directory (e.g., `C:\Tools\ss`).
-4. Run `ss.exe` manually, or add to your Path
+1. Go to the **[Releases](https://github.com/n-crespo/tinyshot/releases)** page.
+2. Download the latest `tinyshot.zip`.
+3. Extract `tinyshot.zip` to your preferred directory (e.g., `C:\Tools\tinyshot`).
+4. Run `tinyshot.exe` manually, or add to your Path
 
-> **Important:** Keep `ss.exe` and its `_internal/` folder in the same directory.
+> **Important:** Keep `tinyshot.exe` and its `_internal/` folder in the same directory.
 
 ## Usage
 
-Add your install directory (e.g., `C:\Tools\ss`) to your Windows User `PATH` via PowerShell:
+Add your install directory (e.g., `C:\Tools\tinyshot`) to your Windows User `PATH` via PowerShell:
 
 ```powershell
-[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools\ss", "User")
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Tools\tinyshot", "User")
 ```
 
 After restarting your terminal, invoke the utility from anywhere by running:
 
 ```ps1
-ss
+tinyshot
 ```
 
 ### (optional) AutoHotkey Shortcut (`Win + Shift + S`)
 
-To replace Windows Snipping Tool with `ss`, you can map it with AutoHotkey:
+To replace Windows Snipping Tool with `tinyshot`, you can map it with AutoHotkey:
 
 > [!NOTE]
-> This is using AutoHotkey v1 syntax, and expects `ss.exe` to be in your path. A
+> This is using AutoHotkey v1 syntax, and expects `tinyshot.exe` to be in your path. A
 > restart may be required.
 
 ```ahk
@@ -47,7 +47,7 @@ To replace Windows Snipping Tool with `ss`, you can map it with AutoHotkey:
 #SingleInstance Force
 SendMode Input
 
-+#s:: Run, ss
++#s:: Run, tinyshot
 ```
 
 ## Build from Source
@@ -61,8 +61,8 @@ SendMode Input
 
 ```ps1
 # Clone the repository
-git clone https://github.com/n-crespo/ss.git
-cd ss
+git clone https://github.com/n-crespo/tinyshot.git
+cd tinyshot
 
 # Create & activate virtual environment
 python -m venv .venv
