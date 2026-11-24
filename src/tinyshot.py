@@ -10,21 +10,27 @@ from PyQt6.QtWidgets import QApplication, QWidget
 class SnippingTool(QWidget):
     def __init__(self):
         super().__init__()
+        # Freeze the screen: capture it once before the overlay appears, then
+        # draw that image as the overlay's background and crop from it.
+        self.frozen = QGuiApplication.primaryScreen().grabWindow(0)
+        self.dpr = self.frozen.devicePixelRatio()
+
         self.setWindowFlags(
             Qt.WindowType.FramelessWindowHint
             | Qt.WindowType.WindowStaysOnTopHint
             | Qt.WindowType.BypassWindowManagerHint
             | Qt.WindowType.Tool
         )
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.showFullScreen()
-        self.setCursor(Qt.CursorShape.CrossCursor)
-
         self.start_point = QPoint()
         self.end_point = QPoint()
         self.is_selecting = False
         self.selected_rect = QRect()
         self.trigger_button = None
+
+        # Show last: the first paint can happen synchronously and needs the
+        # state above.
+        self.setCursor(Qt.CursorShape.CrossCursor)
+        self.showFullScreen()
 
     def mousePressEvent(self, event):
         if event.button() in (Qt.MouseButton.LeftButton, Qt.MouseButton.RightButton):
@@ -65,31 +71,31 @@ class SnippingTool(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
+        painter.drawPixmap(0, 0, self.frozen)
         painter.fillRect(self.rect(), QColor(0, 0, 0, 100))
 
         if self.is_selecting:
             rect = QRect(self.start_point, self.end_point).normalized()
 
-            painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_Clear)
-            painter.fillRect(rect, Qt.GlobalColor.transparent)
+            # Redraw the selected area untinted from the frozen image.
+            painter.drawPixmap(rect, self.frozen, self.to_device(rect))
 
-            painter.setCompositionMode(
-                QPainter.CompositionMode.CompositionMode_SourceOver
-            )
             painter.setPen(QPen(QColor(128, 128, 128), 2))
             painter.drawRect(rect)
 
-    def grab_selection(self) -> QPixmap:
-        self.hide()
-        QApplication.processEvents()
-
-        return QGuiApplication.primaryScreen().grabWindow(
-            0,
-            self.selected_rect.x(),
-            self.selected_rect.y(),
-            self.selected_rect.width(),
-            self.selected_rect.height(),
+    def to_device(self, rect: QRect) -> QRect:
+        """Map a logical widget rect to physical pixels in the frozen image."""
+        return QRect(
+            round(rect.x() * self.dpr),
+            round(rect.y() * self.dpr),
+            round(rect.width() * self.dpr),
+            round(rect.height() * self.dpr),
         )
+
+    def grab_selection(self) -> QPixmap:
+        pixmap = self.frozen.copy(self.to_device(self.selected_rect))
+        pixmap.setDevicePixelRatio(1.0)
+        return pixmap
 
 
 if __name__ == "__main__":
