@@ -1,0 +1,10 @@
+[project]
+name = "tinyshot"
+version = "0.1.0"
+description = "A lightweight Windows region-snipping utility"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["PyQt6"]
+
+[dependency-groups]
+dev = ["pyinstaller"]

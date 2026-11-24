@@ -54,7 +54,7 @@ SendMode Input
 
 ### Prerequisites
 
-- Python 3.11+
+- [`uv`](https://docs.astral.sh/uv/) (`winget install astral-sh.uv`)
 - `just` (`winget install Casey.Just`)
 
 ### Setup Environment
@@ -64,13 +64,11 @@ SendMode Input
 git clone https://github.com/n-crespo/tinyshot.git
 cd tinyshot
 
-# Create & activate virtual environment
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+# Install dependencies (creates .venv, fetches Python if needed)
+uv sync
 
-# Install dependencies
-pip install -r requirements.txt
-
+# run from source
+just run
 # build executable
 just build
 # clean artifacts
