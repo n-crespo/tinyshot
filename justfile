@@ -1,6 +1,10 @@
+# Run from source
+run:
+    uv run src/tinyshot.py
+
 # Build the executable locally
 build:
-    pyinstaller --noconfirm --onedir --windowed \
+    uv run pyinstaller --noconfirm --onedir --windowed \
       --exclude-module PyQt6.QtWebEngineCore \
       --exclude-module PyQt6.QtMultimedia \
       --exclude-module PyQt6.QtQml \
